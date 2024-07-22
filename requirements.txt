@@ -1,4 +1,7 @@
-tensorflow==2.12.0
+torch
+torchvision
+torchaudio
+torchsummary
 pandas
 dvc
 mlflow==2.2.2
