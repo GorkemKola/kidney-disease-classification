@@ -1,1 +1,1 @@
-from cnnClassifier.utils.utils import *
+from .utils import *
