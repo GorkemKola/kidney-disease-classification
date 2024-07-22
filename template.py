@@ -11,10 +11,12 @@ logging.basicConfig(
 project_name = 'cnnClassifier'
 
 list_of_files = [
+    'main.py',
     '.github/workflows',
     f'src/{project_name}/__init__.py',
     f'src/{project_name}/components/__init__.py',
     f'src/{project_name}/utils/__init__.py',
+    f'src/{project_name}/utils/utils.py',
     f'src/{project_name}/config/__init__.py',
     f'src/{project_name}/config/configuration.py',
     f'src/{project_name}/pipeline/__init__.py',
