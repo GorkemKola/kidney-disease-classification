@@ -1,14 +1,9 @@
 import setuptools
-
+from config import *
 with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 __version__ = '0.0.0'
-
-REPO_NAME = 'kidney-disease-classification'
-AUTHOR_USER_NAME = 'GorkemKola'
-SRC_REPO = 'cnnClassifier'
-AUTHOR_EMAIL = 'colaglory@gmail.com'
 
 
 setuptools.setup(

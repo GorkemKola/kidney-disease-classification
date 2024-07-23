@@ -17,7 +17,7 @@ class Training:
         self.model = torch.load(self.config.updated_base_model_path)
         self.model.to(self.device)
 
-    def train_valid_loader(self):
+    def train_valid_test_loader(self):
         basic_transform = transforms.Compose([
             transforms.Resize(self.config.params_image_size[:-1]),
             transforms.ToTensor(),
@@ -38,19 +38,27 @@ class Training:
         full_dataset = datasets.ImageFolder(self.config.training_data, transform=train_transform)
 
         total_size = len(full_dataset)
-        train_size = int(0.8 * total_size)
-        valid_size = total_size - train_size
+        train_size = int(0.7 * total_size)  # 70% for training
+        valid_size = int(0.15 * total_size)  # 15% for validation
+        test_size = total_size - train_size - valid_size  # 15% for testing
 
-        train_dataset, valid_dataset = random_split(full_dataset, [train_size, valid_size], generator=torch.Generator().manual_seed(42))
+        # Ensure reproducibility
+        generator = torch.Generator().manual_seed(self.config.params_random_state)
 
+        train_dataset, valid_dataset, test_dataset = random_split(full_dataset, [train_size, valid_size, test_size], generator=generator)
+
+        # Apply transforms
         train_dataset.dataset.transform = train_transform
         valid_dataset.dataset.transform = basic_transform
+        test_dataset.dataset.transform = basic_transform
 
         self.train_loader = DataLoader(train_dataset, batch_size=self.config.params_batch_size, shuffle=True, num_workers=4)
         self.valid_loader = DataLoader(valid_dataset, batch_size=self.config.params_batch_size, shuffle=False, num_workers=4)
+        self.test_loader = DataLoader(test_dataset, batch_size=self.config.params_batch_size, shuffle=False, num_workers=4)
 
         logger.info(f"Number of training samples: {len(train_dataset)}")
         logger.info(f"Number of validation samples: {len(valid_dataset)}")
+        logger.info(f"Number of test samples: {len(test_dataset)}")
 
     @staticmethod
     def save_model(path: Path, model: nn.Module):
@@ -123,10 +131,16 @@ class Training:
             if valid_loss < best_valid_loss:
                 best_valid_loss = valid_loss
                 early_stopping_counter = 0
-                self.save_model(path=self.config.trained_model_path, model=self.model)
-                logger.info(f'Saved model with valid loss: {valid_loss:.4f}')
+                self.save_model(path=self.config.last_model_path, model=self.model)
+                logger.info(f'Saved best model with valid loss: {valid_loss:.4f}')
+                
+                self.save_model(path=self.config.best_model_path, model=self.model)
+                logger.info(f'Saved best model separately at: {self.config.best_model_path}')
             else:
                 early_stopping_counter += 1
                 if early_stopping_counter >= self.config.params_early_stopping_patience:
                     logger.info('Early stopping triggered')
                     break
+
+        logger.info(f'Training completed. Best validation loss: {best_valid_loss:.4f}')
+        logger.info(f'Best model saved at: {self.config.last_model_path}')

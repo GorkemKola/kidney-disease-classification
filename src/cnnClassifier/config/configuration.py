@@ -4,7 +4,8 @@ from cnnClassifier.utils import read_yaml, create_directories
 from cnnClassifier.entity.config import (
     DataIngestionConfig, 
     PrepareBaseModelConfig,
-    TrainingConfig
+    TrainingConfig,
+    EvaluationConfig
 )
 
 class ConfigurationManager:
@@ -49,7 +50,7 @@ class ConfigurationManager:
         )
 
         return prepare_base_model_config
-    
+
     def get_training_config(self):
         config = self.config.training
         prepare_base_model = self.config.prepare_base_model
@@ -64,7 +65,8 @@ class ConfigurationManager:
 
         training_config = TrainingConfig(
             root_dir=Path(config.root_dir),
-            trained_model_path=Path(config.trained_model_path),
+            last_model_path=Path(config.last_model_path),
+            best_model_path=Path(config.best_model_path),
             updated_base_model_path=Path(prepare_base_model.updated_base_model_path),
             training_data=Path(training_data),
             tensorboard_log_dir=Path(config.tensorboard_log_dir),
@@ -73,7 +75,20 @@ class ConfigurationManager:
             params_augmentation=params.AUGMENTATION,
             params_image_size=params.IMAGE_SIZE,
             params_early_stopping_patience=params.EARLY_STOPPING_PATIENCE,
-            params_learning_rate=params.LEARNING_RATE
+            params_learning_rate=params.LEARNING_RATE,
+            params_random_state=params.RANDOM_STATE
         )
         
         return training_config
+    
+    def get_evaluation_config(self) -> EvaluationConfig:
+        evaluation_config = EvaluationConfig(
+            path_of_model=Path(self.config.training.best_model_path),
+            training_data=Path(self.config.data_ingestion.extracted_data),
+            mlflow_uri=self.config.evaluation.mlflow_uri,
+            params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE,
+            params_random_state=self.params.RANDOM_STATE
+        )
+        return evaluation_config

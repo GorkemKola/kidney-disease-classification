@@ -5,6 +5,7 @@ data_ingestion:
   source_url: https://drive.google.com/file/d/1EAlEHx68JBGW0PjF4PiOoXF4acsSClI4/view?usp=sharing
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
+  extracted_data: artifacts/data_ingestion/CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone
 
 
 prepare_base_model:
@@ -15,6 +16,9 @@ prepare_base_model:
 
 training:
   root_dir: artifacts/training
-  trained_model_path: artifacts/training/model.pt
+  last_model_path: artifacts/training/latest_model.pth
+  best_model_path: artifacts/training/best_model.pth
   tensorboard_log_dir: artifacts/training/tensorboard_logs
 
+evaluation:
+  mlflow_uri: 'https://dagshub.com/GorkemKola/kidney-disease-classification.mlflow'
