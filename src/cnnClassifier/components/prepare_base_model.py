@@ -20,6 +20,7 @@ class PrepareBaseModel:
         if freeze_all:
             for param in model.parameters():
                 param.requires_grad = False
+
         elif (freeze_till is not None) and (freeze_till > 0):
             for param in list(model.parameters())[:-freeze_till]:
                 param.requires_grad = False
@@ -28,17 +29,14 @@ class PrepareBaseModel:
             model.fc = nn.Linear(model.fc.in_features, classes)
         else:
             model.add_module('flatten', nn.Flatten())
-            model.add_module('fc', nn.Linear(2048, classes))  # 2048 is the output size of ResNet50's last conv layer
+            model.add_module('fc', nn.Linear(2048, classes))
 
         model = model.to(self.device)
 
-        criterion = nn.CrossEntropyLoss()
-        optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
-
-        return model, criterion, optimizer
+        return model
     
     def update_base_model(self):
-        self.full_model, self.criterion, self.optimizer = self._prepare_full_model(
+        self.full_model = self._prepare_full_model(
             model=self.model,
             classes=self.config.params_classes,
             freeze_all=True,
@@ -50,10 +48,10 @@ class PrepareBaseModel:
 
     @staticmethod
     def save_model(path: Path, model: nn.Module):
-        torch.save(model.state_dict(), path)
+        torch.save(model, path)
 
     def load_model(self, path: Path):
-        self.model.load_state_dict(torch.load(path))
+        self.model = torch.load(path)
         self.model.to(self.device)
 
     def summary(self):
