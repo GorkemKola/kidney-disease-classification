@@ -1,0 +1,125 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/cnnClassifier/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: dd2e9fddeadf49fe45febabcfba93c6e
+      size: 802
+    - path: src/cnnClassifier/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: e11a6413644f69f13ecf677e1c68f7e5
+      size: 912
+    outs:
+    - path: artifacts/data_ingestion/CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone
+      hash: md5
+      md5: 480f02db6967e2017d804fca0430c1a4.dir
+      size: 1661580918
+      nfiles: 12446
+  prepare_base_model:
+    cmd: python src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: dd2e9fddeadf49fe45febabcfba93c6e
+      size: 802
+    - path: src/cnnClassifier/pipeline/stage_02_prepare_base_model.py
+      hash: md5
+      md5: 173747a6cd1d70e8304fea3c83978354
+      size: 987
+    params:
+      params.yaml:
+        CLASSES: 4
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: IMAGENET1K_V1
+    outs:
+    - path: artifacts/prepare_base_model/
+      hash: md5
+      md5: ac15cb0c4147c612712ba099173e02b1.dir
+      size: 188793050
+      nfiles: 2
+  training:
+    cmd: python src/cnnClassifier/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone
+      hash: md5
+      md5: 480f02db6967e2017d804fca0430c1a4.dir
+      size: 1661580918
+      nfiles: 12446
+    - path: artifacts/prepare_base_model
+      hash: md5
+      md5: ac15cb0c4147c612712ba099173e02b1.dir
+      size: 188793050
+      nfiles: 2
+    - path: config/config.yaml
+      hash: md5
+      md5: dd2e9fddeadf49fe45febabcfba93c6e
+      size: 802
+    - path: src/cnnClassifier/pipeline/stage_03_training.py
+      hash: md5
+      md5: 94682b156d06420ba82c09ac5d670a5c
+      size: 891
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EARLY_STOPPING_PATIENCE: 10
+        EPOCHS: 1
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        LEARNING_RATE: 0.01
+        RANDOM_STATE: 42
+    outs:
+    - path: artifacts/training/best_model.pth
+      hash: md5
+      md5: fcb4eecd991873c542021903f9d11abf
+      size: 94411966
+    - path: artifacts/training/last_model.pth
+      hash: md5
+      md5: 1595c691ede63e6bc1de647aac8f6534
+      size: 94411966
+  evaluation:
+    cmd: python src/cnnClassifier/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone
+      hash: md5
+      md5: 480f02db6967e2017d804fca0430c1a4.dir
+      size: 1661580918
+      nfiles: 12446
+    - path: artifacts/training/best_model.pth
+      hash: md5
+      md5: fcb4eecd991873c542021903f9d11abf
+      size: 94411966
+    - path: artifacts/training/last_model.pth
+      hash: md5
+      md5: 1595c691ede63e6bc1de647aac8f6534
+      size: 94411966
+    - path: config/config.yaml
+      hash: md5
+      md5: dd2e9fddeadf49fe45febabcfba93c6e
+      size: 802
+    - path: src/cnnClassifier/pipeline/stage_04_evaluation.py
+      hash: md5
+      md5: 37055acd3d7e22f06fbb8566084f40f7
+      size: 810
+    params:
+      params.yaml:
+        BATCH_SIZE: 16
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        RANDOM_STATE: 42
+    outs:
+    - path: scores.json
+      hash: md5
+      md5: 86405bb6e1d8371a91474b27c24cd937
+      size: 178

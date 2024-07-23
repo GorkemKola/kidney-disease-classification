@@ -9,6 +9,7 @@ class TrainingPipeline:
     def main(self):
         config = ConfigurationManager()
         training_config = config.get_training_config()
+        print(training_config)
         training = Training(config=training_config)
         training.get_base_model()
         training.train_valid_test_loader()

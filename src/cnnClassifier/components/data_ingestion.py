@@ -23,9 +23,6 @@ class DataIngestion:
             dataset_url = self.config.source_url
             local_data_file = self.config.local_data_file
 
-            if os.path.exists(local_data_file):
-                logger.info(f'{local_data_file} is already exists')
-                return
             logger.info(f'Downloading data from {dataset_url} into file {local_data_file}')
             file_id = dataset_url.split('/')[-2]
             prefix = 'https://drive.google.com/uc?/export=download&id='

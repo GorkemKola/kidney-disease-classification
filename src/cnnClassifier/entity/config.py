@@ -27,7 +27,6 @@ class TrainingConfig:
     last_model_path: Path
     best_model_path: Path
     updated_base_model_path: Path
-    tensorboard_log_dir: Path
     training_data: Path
     params_epochs: int
     params_batch_size: int
@@ -36,7 +35,6 @@ class TrainingConfig:
     params_early_stopping_patience: int
     params_learning_rate: float
     params_random_state: int
-
 
 @dataclass
 class EvaluationConfig:

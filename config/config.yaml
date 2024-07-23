@@ -16,9 +16,8 @@ prepare_base_model:
 
 training:
   root_dir: artifacts/training
-  last_model_path: artifacts/training/latest_model.pth
+  last_model_path: artifacts/training/last_model.pth
   best_model_path: artifacts/training/best_model.pth
-  tensorboard_log_dir: artifacts/training/tensorboard_logs
 
 evaluation:
   mlflow_uri: 'https://dagshub.com/GorkemKola/kidney-disease-classification.mlflow'

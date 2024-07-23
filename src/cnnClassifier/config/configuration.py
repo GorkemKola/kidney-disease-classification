@@ -69,7 +69,6 @@ class ConfigurationManager:
             best_model_path=Path(config.best_model_path),
             updated_base_model_path=Path(prepare_base_model.updated_base_model_path),
             training_data=Path(training_data),
-            tensorboard_log_dir=Path(config.tensorboard_log_dir),
             params_epochs=params.EPOCHS,
             params_batch_size=params.BATCH_SIZE,
             params_augmentation=params.AUGMENTATION,
@@ -78,7 +77,7 @@ class ConfigurationManager:
             params_learning_rate=params.LEARNING_RATE,
             params_random_state=params.RANDOM_STATE
         )
-        
+
         return training_config
     
     def get_evaluation_config(self) -> EvaluationConfig:
