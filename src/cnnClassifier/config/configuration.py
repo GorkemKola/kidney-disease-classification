@@ -5,7 +5,9 @@ from cnnClassifier.entity.config import (
     DataIngestionConfig, 
     PrepareBaseModelConfig,
     TrainingConfig,
-    EvaluationConfig
+    EvaluationConfig,
+    PredictionConfig
+
 )
 
 class ConfigurationManager:
@@ -20,7 +22,9 @@ class ConfigurationManager:
             self.config.artifacts_root,
             self.config.data_ingestion.root_dir,
             self.config.data_ingestion.unzip_dir,
-            self.config.prepare_base_model.root_dir
+            self.config.prepare_base_model.root_dir,
+            self.config.prediction.root_dir
+
         ])
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
@@ -91,3 +95,17 @@ class ConfigurationManager:
             params_random_state=self.params.RANDOM_STATE
         )
         return evaluation_config
+    
+    def get_prediction_config(self) -> PredictionConfig:
+        config = self.config.prediction
+        params = self.params
+
+        prediction_config = PredictionConfig(
+            root_dir=Path(config.root_dir),
+            best_model_path=Path(self.config.training.best_model_path),
+            params_image_size=params.IMAGE_SIZE,
+            params_batch_size=params.BATCH_SIZE,
+            params_classes=params.CLASSES
+        )
+
+        return prediction_config

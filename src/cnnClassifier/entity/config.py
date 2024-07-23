@@ -36,6 +36,7 @@ class TrainingConfig:
     params_learning_rate: float
     params_random_state: int
 
+
 @dataclass
 class EvaluationConfig:
     path_of_model: Path
@@ -45,3 +46,11 @@ class EvaluationConfig:
     params_image_size: list
     params_batch_size: int
     params_random_state: int
+
+@dataclass(frozen=True)
+class PredictionConfig:
+    root_dir: Path
+    best_model_path: Path
+    params_image_size: list
+    params_batch_size: int
+    params_classes: int

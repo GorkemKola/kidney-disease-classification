@@ -21,3 +21,6 @@ training:
 
 evaluation:
   mlflow_uri: 'https://dagshub.com/GorkemKola/kidney-disease-classification.mlflow'
+
+prediction:
+  root_dir: artifacts/prediction
