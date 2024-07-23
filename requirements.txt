@@ -1,10 +1,12 @@
 dagshub==0.3.32
-dvc
--e .
+dvc==3.51.3
 ensure==1.0.4
+Flask==3.0.3
+Flask_Cors==4.0.1
 gdown==5.2.0
 joblib==1.4.2
 mlflow==2.14.3
+Pillow==10.4.0
 python_box==6.0.2
 PyYAML==6.0.1
 scikit_learn==1.5.1
@@ -13,5 +15,4 @@ torch==2.3.1
 torchsummary==1.5.1
 torchvision==0.18.1
 tqdm==4.66.4
-flask
-flask-cors
+-e .

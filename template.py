@@ -12,7 +12,7 @@ project_name = 'cnnClassifier'
 
 list_of_files = [
     'main.py',
-    '.github/workflows',
+    '.github/workflows/main.yaml',
     f'src/{project_name}/__init__.py',
     f'src/{project_name}/components/__init__.py',
     f'src/{project_name}/components/data_ingestion.py',

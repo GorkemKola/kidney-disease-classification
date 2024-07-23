@@ -5,7 +5,6 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 __version__ = '0.0.0'
 
-
 setuptools.setup(
     name=SRC_REPO,
     version=__version__,
