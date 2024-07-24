@@ -15,5 +15,6 @@ RUN pip install --upgrade pip
 # Install the dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+
 # Command to run the application
 CMD ["python3", "app.py"]
