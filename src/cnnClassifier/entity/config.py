@@ -50,7 +50,7 @@ class EvaluationConfig:
 @dataclass(frozen=True)
 class PredictionConfig:
     root_dir: Path
-    best_model_path: Path
+    model_path: Path
     params_image_size: list
     params_batch_size: int
     params_classes: int

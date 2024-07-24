@@ -24,3 +24,4 @@ evaluation:
 
 prediction:
   root_dir: artifacts/prediction
+  model_path: model/model.pth

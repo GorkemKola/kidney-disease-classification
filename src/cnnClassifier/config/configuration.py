@@ -102,7 +102,7 @@ class ConfigurationManager:
 
         prediction_config = PredictionConfig(
             root_dir=Path(config.root_dir),
-            best_model_path=Path(self.config.training.best_model_path),
+            model_path=Path(config.model_path),
             params_image_size=params.IMAGE_SIZE,
             params_batch_size=params.BATCH_SIZE,
             params_classes=params.CLASSES

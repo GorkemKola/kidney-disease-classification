@@ -20,7 +20,7 @@ class Prediction:
         return classes
 
     def load_model(self):
-        model = torch.load(self.config.best_model_path, map_location=self.device)
+        model = torch.load(self.config.model_path, map_location=self.device)
         model.eval()
         return model
 
