@@ -25,7 +25,6 @@ This project classifies diseases in Kidney CT images using a fine-tuned ResNet-5
    python main.py
    ```
 
-
 #### To run the web app:
 
 1. Start the Flask app:
@@ -34,7 +33,6 @@ This project classifies diseases in Kidney CT images using a fine-tuned ResNet-5
    python app.py
    ```
 2. Open your browser and navigate to `http://localhost:8080` to use the web app for inference.
-
 
 #### To dockerize the project:
 
@@ -46,7 +44,7 @@ This project classifies diseases in Kidney CT images using a fine-tuned ResNet-5
 2. Run the Docker container:
 
    ```bash
-   docker run -p 5000:5000 kidney_disease_classifier
+   docker run -p 8080:8080 kidney_disease_classifier
    ```
 
 ### References
