@@ -162,5 +162,3 @@ cython_debug/
 #.idea/
 
 artifacts/*
-
-update_requirements.sh
