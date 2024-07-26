@@ -1,6 +1,10 @@
 # Kidney Disease Classification
 
-### Abstract
+### Demo
+
+https://kidney-disease-classification-9axe.onrender.com/
+
+Abstract
 
 This project classifies diseases in Kidney CT images using a fine-tuned ResNet-50 model. The dataset, sourced from Kaggle, consists of images labeled into one of four categories: Cyst, Normal, Stone, and Tumor. To address this classification problem, a production-level pipeline was designed utilizing DVC and CI/CD methodologies. The data pipeline comprises four main components: Data Ingestion, Base Model Preparation, Training, and Evaluation. Additionally, a Flask-based web app is implemented for inference, allowing users to upload their CT images and receive real-time classification results.
 
